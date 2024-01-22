@@ -8,6 +8,7 @@ async function httpGetPlanets() {
 
 async function httpGetLaunches() {
   const response = await axios.get(`${BASE_URL}/launches`);
+  console.log("response",response)
   const fetchedLaunches = response?.data;
   return fetchedLaunches.sort((a, b) => {
     return a.flightNumber - b.flightNumber;
@@ -15,13 +16,25 @@ async function httpGetLaunches() {
 }
 
 async function httpSubmitLaunch(launch) {
-  // TODO: Once API is ready.
-  // Submit given launch data to launch system.
+ try {
+  const response = await axios.post(`${BASE_URL}/launches`, {
+    launch
+  });
+  return response?.data;
+ } catch (error) {
+    return false
+ }
 }
 
 async function httpAbortLaunch(id) {
-  // TODO: Once API is ready.
   // Delete launch with given ID.
+  try {
+    const response = await axios.delete(`${BASE_URL}/launches/${id}`);
+    return response?.data
+  } catch (error) {
+    console.error("Delete request failed with error:", error);
+    return false;
+  }
 }
 
 export {

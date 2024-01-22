@@ -2,29 +2,41 @@ const launches = new Map();
 
 let latestFlightNumber = 100;
 const launch = {
-    fligthNumber: 100,
+    flightNumber: 100,
     mission: "Kepler Exploration X",
     rocket: "Explorer IS1",
     launchDate: new Date('December 27, 2030'),
-    destination: 'Kepler-442 b',
+    target: 'Kepler-442 b',    
     customers: ['SpaceX', 'Nasa'],
     upcoming: true,
     success: true
 };
 
-launches.set(launch.fligthNumber, launch);
-
-function getLaunches() {
-    return launches;
+let launchArray = [launch];
+launches.set(launch.flightNumber, launch);
+export function getLaunches() {
+    return launchArray;
 };
 
-function addNewLaunch(launch) {
+export function addNewLaunch(launch) {
     latestFlightNumber++;
-    launches.set(latestFlightNumber, Object.assign(launch, {
+    const newLaunch = Object.assign(launch, {
         success: true,
         upcoming: true,
         customers:['Parlak', 'Nasa'],
-        fligthNumber: latestFlightNumber
-    }))
+        flightNumber: latestFlightNumber
+    });
+    launchArray.push(newLaunch); 
+    // launches.set(latestFlightNumber, Object.assign(launch, {
+    //     success: true,
+    //     upcoming: true,
+    //     customers:['Parlak', 'Nasa'],
+    //     fligthNumber: latestFlightNumber
+    // }))
+};
+
+export function removeLaunch(id) {
+    const updatedLaunchArray = launchArray.filter((item) => item.flightNumber != id);
+    launchArray = updatedLaunchArray;
+    return updatedLaunchArray;
 }
-export default getLaunches;
